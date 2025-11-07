@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct RootView: View {
+    @StateObject var auth = AuthService()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Group {
+            if auth.user != nil {
+                MainListView()
+                    .environmentObject(auth)
+            } else {
+                LoginView()
+                    .environmentObject(auth)
+            }
+        }
     }
 }
-
 #Preview {
     RootView()
 }
